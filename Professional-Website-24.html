@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCJP GRAND v6.0 | DEVELOPED BY SHAHADAT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Orbitron:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff007f;
+            --bg-dark: #020205;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(0, 243, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg-dark); color: white; overflow: hidden; height: 100vh; }
+
+        /* --- 1. SHAHADAT LOGO REVEAL ANIMATION --- */
+        #preloader {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .reveal-name {
+            font-family: 'Syncopate', sans-serif; font-size: 3.5rem; color: white;
+            letter-spacing: 12px; text-shadow: 0 0 20px var(--neon-blue);
+            white-space: nowrap; overflow: hidden; width: 0;
+            animation: typing 3s steps(8) forwards, glow 1.5s infinite alternate;
+        }
+        @keyframes typing { from { width: 0 } to { width: 620px } }
+        @keyframes glow { from { text-shadow: 0 0 10px var(--neon-blue); } to { text-shadow: 0 0 30px var(--neon-blue), 0 0 50px var(--neon-pink); } }
+
+        /* --- 2. MAIN LAYOUT --- */
+        .app-shell { display: flex; height: 100vh; visibility: hidden; opacity: 0; transition: 1s ease-in-out; }
+
+        aside {
+            width: 300px; background: rgba(0,0,0,0.85); backdrop-filter: blur(25px);
+            border-right: 1px solid var(--border); padding: 40px 25px; display: flex; flex-direction: column;
+        }
+
+        .nav-link {
+            padding: 16px; margin-bottom: 12px; border-radius: 15px; cursor: pointer;
+            transition: 0.4s; display: flex; align-items: center; gap: 15px; color: #888; text-decoration: none;
+        }
+        .nav-link:hover, .active { background: var(--card-glass); color: var(--neon-blue); border: 1px solid var(--border); }
+
+        main { flex: 1; padding: 40px; overflow-y: auto; background: radial-gradient(circle at top, #0a1128 0%, var(--bg-dark) 80%); }
+
+        /* --- 3. COMPONENTS --- */
+        .grid-system { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .neon-card {
+            background: var(--card-glass); border: 1px solid var(--border); border-radius: 30px;
+            padding: 35px; position: relative; transition: 0.5s;
+        }
+        .neon-card:hover { border-color: var(--neon-pink); transform: translateY(-10px); box-shadow: 0 0 40px rgba(255, 0, 127, 0.1); }
+
+        .btn-matrix {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            color: black; border: none; padding: 15px; border-radius: 12px; font-weight: 800;
+            cursor: pointer; width: 100%; margin-top: 20px; text-transform: uppercase;
+        }
+
+        /* --- 4. SOCIAL DOCK --- */
+        .social-dock { display: flex; gap: 15px; margin-top: auto; justify-content: center; padding-top: 20px; }
+        .soc-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--card-glass); border: 1px solid var(--border); color: white; text-decoration: none; transition: 0.3s; }
+        .soc-btn:hover { background: var(--neon-blue); color: black; transform: scale(1.1); }
+
+        /* --- 5. FLOATING WHATSAPP --- */
+        .wa-bolt {
+            position: fixed; bottom: 35px; right: 35px; background: #25d366;
+            width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 2.2rem; color: white; text-decoration: none; z-index: 1000;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="reveal-name">SHAHADAT</div>
+        <p style="color: var(--neon-blue); margin-top: 15px; letter-spacing: 4px; font-family: 'Orbitron';">BCJP GRAND v6.0 INITIALIZING...</p>
+    </div>
+
+    <div class="app-shell" id="main-app">
+        <aside>
+            <div style="font-family: 'Syncopate'; font-size: 1.4rem; margin-bottom: 50px; letter-spacing: -1px;">BCJP <span>v6.0</span></div>
+            <nav style="flex: 1;">
+                <a href="#" class="nav-link active"><i class="fas fa-terminal"></i> Command Center</a>
+                <a href="#" class="nav-link"><i class="fas fa-atom"></i> Organic Lab</a>
+                <a href="#" class="nav-link"><i class="fas fa-microscope"></i> Bio Archive</a>
+                <a href="#" class="nav-link"><i class="fas fa-id-badge"></i> ID Studio Pro</a>
+            </nav>
+
+            <div class="social-dock">
+                <a href="https://wa.me/8801839437505" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+            </div>
+        </aside>
+
+        <main>
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px;">
+                <h1 style="font-family: 'Orbitron'; font-size: 2.2rem;">SYSTEM STATUS: <span style="color: var(--neon-blue);">ONLINE</span></h1>
+                <div style="background: var(--card-glass); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--border);">
+                    <i class="fas fa-user-shield" style="color: var(--neon-blue);"></i> ADMIN: SHAHADAT
+                </div>
+            </header>
+
+            <div class="grid-system">
+                <div class="neon-card">
+                    <h3>🧪 Chemistry Archive (Ch-11)</h3>
+                    <p style="color: #888; margin-top: 15px;">Advanced analysis of Alkanes and Organic Molecular chains.</p>
+                    <div style="margin-top: 20px; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 15px; border-left: 4px solid var(--neon-blue);">
+                        <code style="color: var(--neon-blue);">CnH2n+2 // Alkane Series</code>
+                    </div>
+                    <button class="btn-matrix">Access Notes</button>
+                </div>
+
+                <div class="neon-card">
+                    <h3>🪪 ID Studio v6.0</h3>
+                    <input type="text" id="nameIn" placeholder="Full Member Name" oninput="updateID()" style="width:100%; padding:15px; background:black; border:1px solid #333; color:white; border-radius:10px; margin-top:15px;">
+                    <div id="id-card" style="width:100%; height:180px; background:white; border-radius:15px; margin-top:20px; color:black; position:relative; overflow:hidden; text-align:center;">
+                        <div style="height:50px; background:var(--bg-dark); width:100%;"></div>
+                        <div style="width:70px; height:70px; background:#ccc; border-radius:50%; margin:-35px auto 10px; border:4px solid white;"></div>
+                        <h4 id="dispName">MEMBER NAME</h4>
+                        <p style="font-size: 10px; color: #666;">BCJP OFFICIAL CORE MEMBER</p>
+                    </div>
+                    <button class="btn-matrix" onclick="downloadID()">Capture PNG</button>
+                </div>
+
+                <div class="neon-card">
+                    <h3>💬 Neural Communication</h3>
+                    <div id="chat-box" style="height:140px; overflow-y:auto; background:rgba(0,0,0,0.4); border-radius:15px; padding:15px; margin-top:15px; font-size: 13px;">
+                        <div style="color: var(--neon-pink);">[System]: Servers in Anwara active.</div>
+                        <div style="color: var(--neon-blue);">[System]: Welcome Shahadat.</div>
+                    </div>
+                    <input type="text" placeholder="Broadcast to council..." style="width:100%; background:transparent; border:none; border-bottom: 2px solid var(--neon-blue); padding:10px; color:white; outline:none; margin-top:10px;">
+                </div>
+            </div>
+
+            <div class="neon-card" style="margin-top: 30px;">
+                <h3>📊 Council Development Metrics</h3>
+                <canvas id="mainChart" height="100"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <a href="https://wa.me/8801839437505" target="_blank" class="wa-bolt">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Start Reveal Animation then Load App
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+                const app = document.getElementById('main-app');
+                app.style.visibility = 'visible';
+                app.style.opacity = '1';
+            }, 4000);
+        });
+
+        // Live ID Studio Update
+        function updateID() {
+            document.getElementById('dispName').innerText = document.getElementById('nameIn').value || "MEMBER NAME";
+        }
+
+        // Capture ID Card
+        function downloadID() {
+            html2canvas(document.querySelector("#id-card")).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'BCJP_Core_ID.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        // System Chart Logic
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Stage 1', 'Stage 2', 'Stage 3', 'Stage 4', 'Stage 5', 'Grand 6'],
+                datasets: [{
+                    label: 'System Complexity',
+                    data: [12, 28, 45, 65, 82, 100],
+                    borderColor: '#00f3ff',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(0, 243, 255, 0.05)'
+                }]
+            },
+            options: { scales: { y: { display: false }, x: { grid: { display: false } } } }
+        });
+    </script>
+</body>
+</html>
